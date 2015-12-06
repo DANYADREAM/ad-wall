@@ -49,7 +49,7 @@ public class App {
     }
 
     static void loadResources() throws IOException {
-        wallImage = ImageIO.read(new File("brick.jpg"));
+        wallImage = ImageIO.read(new File("D:\\Programming\\Projects\\AdWall\\src\\main\\resources\\brick.jpg"));
         userImage = ImageIO.read(new File("D:\\Programming\\Projects\\AdWall\\src\\main\\resources\\user2.gif"));
         emptyImage = ImageIO.read(new File("D:\\Programming\\Projects\\AdWall\\src\\main\\resources\\star.png"));
         enemyImage = ImageIO.read(new File("D:\\Programming\\Projects\\AdWall\\src\\main\\resources\\user3.png"));
@@ -105,7 +105,7 @@ public class App {
 
     static boolean isNotEmptyField(int x, int y) {
         char fieldCell = field[x][y];
-        return fieldCell == wall || fieldCell == user || fieldCell == enemy;
+        return fieldCell == wall || fieldCell == enemy;//|| fieldCell == user
     }
 
     static void clearField() {
@@ -333,36 +333,39 @@ public class App {
                 case 0:
                     setField(enemyX, enemyY, passed);
                     enemyX--;
-                    if (field[enemyX][enemyY] == empty) {
-                        enemyScore++;
-                    }
-                    setField(enemyX, enemyY, enemy);
+                    processMoveResult();
                     break;
                 case 1:
                     setField(enemyX, enemyY, passed);
                     enemyY++;
-                    if (field[enemyX][enemyY] == empty) {
-                        enemyScore++;
-                    }
+                    processMoveResult();
                     setField(enemyX, enemyY, enemy);
                     break;
                 case 2:
                     setField(enemyX, enemyY, passed);
                     enemyX++;
-                    if (field[enemyX][enemyY] == empty) {
-                        enemyScore++;
-                    }
+                    processMoveResult();
                     setField(enemyX, enemyY, enemy);
                     break;
                 case 3:
                     setField(enemyX, enemyY, passed);
                     enemyY--;
-                    if (field[enemyX][enemyY] == empty) {
-                        enemyScore++;
-                    }
+                    processMoveResult();
                     setField(enemyX, enemyY, enemy);
                     break;
             }
+        }
+
+        private void processMoveResult() {
+            if (field[enemyX][enemyY] == empty) {
+                enemyScore++;
+            }
+            if (field[enemyX][enemyY] == user) {
+                JOptionPane.showMessageDialog(jPanel,
+                        "You lost!");
+                System.exit(0);
+            }
+            setField(enemyX, enemyY, enemy);
         }
 
         private int getRandomDirection(int lastDirection) {
