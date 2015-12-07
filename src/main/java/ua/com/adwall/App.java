@@ -137,11 +137,11 @@ public class App {
             setSize((xSize + 1) * cellSize, (ySize + 2) * cellSize);
             setVisible(true);
 
-            new EnemyThread(jPanel, xSize - 2, ySize - 2, true).start();
+            new EnemyThread(jPanel, xSize - 2, ySize - 2, 500, false).start();
             Thread.sleep(100);
-            new EnemyThread(jPanel, 1, ySize - 2, true).start();
+            new EnemyThread(jPanel, 1, ySize - 2, 1000, false).start();
             Thread.sleep(100);
-            new EnemyThread(jPanel, xSize - 2, 1, true).start();
+            new EnemyThread(jPanel, xSize - 2, 1, 1500, false).start();
         }
     }
 
@@ -301,12 +301,14 @@ public class App {
         private int enemyY;
         private int direction;
         private boolean smart;
+        private int speed;
 
-        public EnemyThread(JPanel jPanel, int startX, int startY, boolean smart) {
+        public EnemyThread(JPanel jPanel, int startX, int startY, int speed, boolean smart) {
             this.jPanel = jPanel;
             this.enemyX = startX;
             this.enemyY = startY;
             this.smart = smart;
+            this.speed = speed;
             field[enemyX][enemyY] = enemy;
         }
 
@@ -321,7 +323,7 @@ public class App {
                 }
                 jPanel.updateUI();
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(speed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
